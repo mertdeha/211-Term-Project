@@ -54,6 +54,30 @@ public:
     }
     size++;
   }
+  
+  bool remove(const T& value) {
+    Node<T>* current = head;
+    Node<T>* prev = nullptr;
+
+    while (current != nullptr) {
+        if (current->data == value) {
+            if (prev == nullptr)       // baş düğüm siliniyorsa
+                head = current->next;
+            else
+                prev->next = current->next;
+
+            if (current == tail)       // kuyruk düğüm siliniyorsa
+                tail = prev;
+
+            delete current;
+            size--;
+            return true;
+        }
+        prev = current;
+        current = current->next;
+    }
+    return false;
+}
 
   /**
    * @brief Listenin basindaki elemani dondurur (Iterasyon icin gereklidir).
