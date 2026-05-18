@@ -1,8 +1,9 @@
- // Kendi yapimizi dahil ettik
-#include <iostream>
-#include <string>
+// Kendi yapimizi dahil ettik
+#include "../include/data_structures/Graph.h"
 #include "../include/data_structures/HashMap.h"
 #include "../include/data_structures/LinkedList.h"
+#include <iostream>
+#include <string>
 
 int main(int argc, char *argv[]) {
   std::string inputFile = "data/input_sample.json";
@@ -38,17 +39,35 @@ int main(int argc, char *argv[]) {
   std::cout << std::endl;
   std::cout << "[TEST] Basarili!" << std::endl;
 
-//HashMap test
+  // HashMap test
   std::cout << "\n[TEST] HashMap Calisiyor mu?" << std::endl;
   HashMap<std::string, int> studentGrades;
   studentGrades.insert("Alice", 85);
   studentGrades.insert("Bob", 92);
 
   std::cout << "Alice'in notu: " << *studentGrades.get("Alice") << std::endl;
-  std::cout << "Bob'un notu: " << *studentGrades.get("Bob") << std::endl;  
+  std::cout << "Bob'un notu: " << *studentGrades.get("Bob") << std::endl;
   std::cout << "[TEST] Basarili!" << std::endl;
 
-  
+  // Graph test
+
+  Graph conflictGraph;
+
+  // 2. Dersleri (Dugumleri) grafa ekle
+  conflictGraph.addVertex("CSE101");
+  conflictGraph.addVertex("CSE201");
+  conflictGraph.addVertex("MATH101");
+  conflictGraph.addVertex("PHYS101");
+
+  // 3. Cakismalari (Kenarlari) belirle
+  // Ornegin: Ayni ogrenci hem CSE101 hem de MATH101 aliyor
+  conflictGraph.addEdge("CSE101", "MATH101");
+  conflictGraph.addEdge("CSE101", "PHYS101");
+  conflictGraph.addEdge("CSE201", "MATH101");
+
+  // 4. Grafi ekrana yazdir
+  std::cout << "[TEST] Cakisim Grafi (Conflict Graph):\n";
+  conflictGraph.printGraph();
 
   return 0;
 }
