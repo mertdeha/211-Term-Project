@@ -1,6 +1,8 @@
-#include "data_structures/LinkedList.h" // Kendi yapimizi dahil ettik
+ // Kendi yapimizi dahil ettik
 #include <iostream>
 #include <string>
+#include "../include/data_structures/HashMap.h"
+#include "../include/data_structures/LinkedList.h"
 
 int main(int argc, char *argv[]) {
   std::string inputFile = "data/input_sample.json";
@@ -27,14 +29,26 @@ int main(int argc, char *argv[]) {
   // Listeyi bastan sona gezerek ekrana yazdirma (Iterasyon)
   std::cout << "Dersler: ";
   Node<std::string> *current = courseList.getHead();
-  while (current != nullptr) {
+  while (current != NULL) {
     std::cout << current->data;
-    if (current->next != nullptr)
+    if (current->next != NULL)
       std::cout << " -> ";
     current = current->next;
   }
   std::cout << std::endl;
   std::cout << "[TEST] Basarili!" << std::endl;
+
+//HashMap test
+  std::cout << "\n[TEST] HashMap Calisiyor mu?" << std::endl;
+  HashMap<std::string, int> studentGrades;
+  studentGrades.insert("Alice", 85);
+  studentGrades.insert("Bob", 92);
+
+  std::cout << "Alice'in notu: " << *studentGrades.get("Alice") << std::endl;
+  std::cout << "Bob'un notu: " << *studentGrades.get("Bob") << std::endl;  
+  std::cout << "[TEST] Basarili!" << std::endl;
+
+  
 
   return 0;
 }
