@@ -1,4 +1,4 @@
-// Kendi yapimizi dahil ettik
+#include "../include/data_structures/DynamicArray.h"
 #include "../include/data_structures/Graph.h"
 #include "../include/data_structures/HashMap.h"
 #include "../include/data_structures/LinkedList.h"
@@ -68,6 +68,29 @@ int main(int argc, char *argv[]) {
   // 4. Grafi ekrana yazdir
   std::cout << "[TEST] Cakisim Grafi (Conflict Graph):\n";
   conflictGraph.printGraph();
+
+  // --- DYNAMIC ARRAY TESTI BASLIYOR ---
+  std::cout << "\n[TEST] Dinamik Dizi (DynamicArray) Calisiyor mu?"
+            << std::endl;
+
+  DynamicArray<std::string> ogrenciler;
+
+  ogrenciler.push_back("Ahmet");
+  ogrenciler.push_back("Ayse");
+  ogrenciler.push_back(
+      "Mehmet"); // Burada kapasite aşılacak ve resize() çalışacak
+
+  std::cout << "Diziye eklenen ogrenci sayisi: " << ogrenciler.size()
+            << std::endl;
+  std::cout << "Ogrenciler: ";
+
+  for (int i = 0; i < ogrenciler.size(); i++) {
+    std::cout << ogrenciler.get(i);
+    if (i != ogrenciler.size() - 1) {
+      std::cout << ", ";
+    }
+  }
+  std::cout << "\n[TEST] DynamicArray Basarili!" << std::endl;
 
   return 0;
 }
