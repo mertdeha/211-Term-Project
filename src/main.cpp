@@ -3,6 +3,7 @@
 #include <string>
 #include "../include/data_structures/HashMap.h"
 #include "../include/data_structures/LinkedList.h"
+#include "../include/data_structures/DynamicArray.h"
 
 int main(int argc, char *argv[]) {
   std::string inputFile = "data/input_sample.json";
@@ -48,7 +49,25 @@ int main(int argc, char *argv[]) {
   std::cout << "Bob'un notu: " << *studentGrades.get("Bob") << std::endl;  
   std::cout << "[TEST] Basarili!" << std::endl;
 
+  // --- DYNAMIC ARRAY TESTI BASLIYOR ---
+  std::cout << "\n[TEST] Dinamik Dizi (DynamicArray) Calisiyor mu?" << std::endl;
   
+  DynamicArray<std::string> ogrenciler;
+  
+  ogrenciler.push_back("Ahmet");
+  ogrenciler.push_back("Ayse");
+  ogrenciler.push_back("Mehmet"); // Burada kapasite aşılacak ve resize() çalışacak
+
+  std::cout << "Diziye eklenen ogrenci sayisi: " << ogrenciler.size() << std::endl;
+  std::cout << "Ogrenciler: ";
+
+  for (int i = 0; i < ogrenciler.size(); i++) {
+      std::cout << ogrenciler.get(i);
+      if (i != ogrenciler.size() - 1) {
+          std::cout << ", ";
+      }
+  }
+  std::cout << "\n[TEST] DynamicArray Basarili!" << std::endl;
 
   return 0;
 }
