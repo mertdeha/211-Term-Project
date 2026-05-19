@@ -1,44 +1,31 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "LinkedList.h" // Kendi listemizi dahil ediyoruz
+#include "../data_structures/HashMap.h"    // HashMap'i dahil ettik
+#include "../data_structures/LinkedList.h" // LinkedList'i dahil ettik
 #include <iostream>
 #include <string>
 
-/**
- * @brief Graftaki her bir dugumu (dersi/sinavi) temsil eder.
- */
 struct Vertex {
-  std::string id;                ///< Dersin kimligi (Orn: CSE101)
-  LinkedList<std::string> edges; ///< Bu dersle cakisan diger derslerin listesi
-  Vertex *next; ///< Graf icindeki bir sonraki dugumu isaret eder
+  std::string id;
+  LinkedList<std::string> edges;
+  Vertex *next;
 
-  /**
-   * @brief Vertex kurucu metodu
-   */
   Vertex(std::string vertexId) : id(vertexId), next(NULL) {}
 };
 
-/**
- * @brief Sinavlar arasi cakismani modelleyen yonsuz graf (Undirected Graph)
- * sinifi.
- */
 class Graph {
 private:
-  Vertex *head;    ///< Graftaki ilk dugumun pointer'i
-  int numVertices; ///< Toplam dugum sayisi
+  Vertex *head;
+  int numVertices;
+  HashMap<std::string, Vertex *> vertexMap; // Hizli erisim icin map ekledik
 
 public:
   Graph() : head(NULL), numVertices(0) {}
 
   ~Graph() { clear(); }
 
-  /**
-   * @brief Grafa yeni bir dugum (ders) ekler.
-   * @param id Eklenecek dersin kodu
-   */
   void addVertex(std::string id) {
-    // Eger dugum zaten varsa ekleme
     if (getVertex(id) != NULL)
       return;
 
@@ -46,7 +33,6 @@ public:
     if (head == NULL) {
       head = newVertex;
     } else {
-      // Listenin sonuna ekle
       Vertex *current = head;
       while (current->next != NULL) {
         current = current->next;
@@ -54,46 +40,37 @@ public:
       current->next = newVertex;
     }
     numVertices++;
+    vertexMap.insert(id, newVertex); // Map'e de kaydediyoruz
   }
 
-  /**
-   * @brief Iki dugum arasina kenar ceker (Cakismayi belirtir).
-   * Yonsuz graf oldugu icin A'dan B'ye ve B'den A'ya baglanti ekler.
-   */
   void addEdge(std::string src, std::string dest) {
     Vertex *v1 = getVertex(src);
     Vertex *v2 = getVertex(dest);
 
-    // Iki dugum de grafta bulunmali
     if (v1 != NULL && v2 != NULL) {
       v1->edges.insert(dest);
       v2->edges.insert(src);
     }
   }
 
-  /**
-   * @brief ID'si verilen dugumu bulur ve dondurur.
-   */
+  // Artik O(N) degil, O(1) hizinda arama yapiyor!
   Vertex *getVertex(std::string id) const {
-    Vertex *current = head;
-    while (current != NULL) {
-      if (current->id == id) {
-        return current;
-      }
-      current = current->next;
+    Vertex **found = vertexMap.get(id);
+    if (found != NULL) {
+      return *found;
     }
-    return NULL; // Bulunamazsa null doner
+    return NULL;
   }
 
-  /**
-   * @brief Grafin tamamini (dugumleri ve komsularini) ekrana yazdirir.
-   */
+  // Algoritmanin tum sinavlari donmesi icin head pointer'ini veren fonksiyon
+  Vertex *getHead() const { return head; }
+  int getNumVertices() const { return numVertices; }
+
   void printGraph() const {
     Vertex *current = head;
     while (current != NULL) {
       std::cout << "[" << current->id << "] sunlarla cakisiyor: ";
 
-      // Komsu listesini geziyoruz
       Node<std::string> *edgeCurrent = current->edges.getHead();
       if (edgeCurrent == NULL) {
         std::cout << "Hicbiri";
@@ -108,15 +85,11 @@ public:
     }
   }
 
-  /**
-   * @brief Bellek sizintilarini onlemek icin grafi temizler.
-   */
   void clear() {
     Vertex *current = head;
     while (current != NULL) {
       Vertex *nextVertex = current->next;
-      delete current; // Vertex silindiginde icindeki LinkedList'in de
-                      // destructoru otomatik calisir!
+      delete current;
       current = nextVertex;
     }
     head = NULL;
