@@ -95,6 +95,23 @@ public:
     head = NULL;
     numVertices = 0;
   }
+
+  int getDegree(std::string id) const {
+    Vertex *v = getVertex(id);
+    if (v != NULL) {
+      return v->edges.getSize(); // LinkedList'inin getSize() fonksiyonunu kullaniyoruz
+    }
+    return 0;
+  }
+  
+  const LinkedList<std::string>& getNeighbors(std::string id) const {
+    Vertex *v = getVertex(id);
+    if (v != NULL) {
+      return v->edges; 
+    }
+    static const LinkedList<std::string> emptyList;
+    return emptyList;
+  }
 };
 
 #endif // GRAPH_H

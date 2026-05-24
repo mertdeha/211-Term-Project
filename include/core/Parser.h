@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 class Parser {
 public:
@@ -117,6 +118,47 @@ private:
     }
     return list;
   }
+// ODA BILGILERINI OKUYAN FONKSIYON
+  static void parseRooms(const std::string &filename, DynamicArray<Room> &allRooms) {
+    std::ifstream file(filename.c_str());
+    if (!file.is_open()) return;
+
+    std::string content = "";
+    std::string tempLine;
+    while (std::getline(file, tempLine)) {
+        content += tempLine + " ";
+    }
+    file.close();
+
+    // "rooms" etiketinin başladığı yeri bul
+    size_t roomsSection = content.find("\"rooms\"");
+    if (roomsSection == std::string::npos) return;
+
+    size_t currentPos = roomsSection;
+    while ((currentPos = content.find("{", currentPos)) != std::string::npos) {
+        size_t endPos = content.find("}", currentPos);
+        if (endPos == std::string::npos) break;
+
+        std::string block = content.substr(currentPos, endPos - currentPos);
+
+        if (block.find("\"capacity\"") != std::string::npos) {
+            std::string roomId = extractValue(block, "\"id\"");
+            std::string capStr = extractValue(block, "\"capacity\"");
+            
+          
+            if(capStr.empty()) { // Tırnaksız sayı kontrolü
+                size_t capPos = block.find("\"capacity\"");
+                size_t colonPos = block.find(":", capPos);
+                size_t commaPos = block.find_first_of(",}", colonPos);
+                capStr = block.substr(colonPos + 1, commaPos - colonPos - 1);
+            }
+            
+            int capacity = std::atoi(capStr.c_str());
+            allRooms.push_back(Room(roomId, capacity));
+        }
+        currentPos = endPos + 1;
+    }
+}
 };
 
 #endif // PARSER_H

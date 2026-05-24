@@ -22,7 +22,7 @@ struct KeyValuePair {
 template <typename K, typename V>
 class HashMap {
     static_assert(std::is_same<K, std::string>::value, 
-              "HashMap sadece string key destekler");
+              "HashMap only supports string keys.");
 private:
 
     LinkedList<KeyValuePair<K, V>>* table; 
