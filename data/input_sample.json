@@ -1,4 +1,39 @@
 {
-    "status": "Basarili",
-    "message": "Veri dosyasi erisilebilir"
+    "courses": [
+        {
+            "id": "CSE101",
+            "name": "Intro to CS",
+            "enrolled": [
+                "S1",
+                "S2",
+                "S3"
+            ]
+        },
+        {
+            "id": "CSE211",
+            "name": "Data Structures",
+            "enrolled": [
+                "S1",
+                "S4",
+                "S5"
+            ]
+        },
+        {
+            "id": "MATH101",
+            "name": "Calculus",
+            "enrolled": [
+                "S2",
+                "S3",
+                "S4"
+            ]
+        },
+        {
+            "id": "PHYS101",
+            "name": "Physics",
+            "enrolled": [
+                "S5",
+                "S6"
+            ]
+        }
+    ]
 }
