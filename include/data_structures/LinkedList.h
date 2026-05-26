@@ -2,18 +2,24 @@
 #define LINKEDLIST_H
 
 /**
+ * @file LinkedList.h
+ * @brief STL yerine yazilan kendi Bagli Liste veri yapimiz.
+ */
+
+/**
  * @brief Bagli liste dugumunu (Node) temsil eden yapi.
  * @tparam T Dugumde tutulacak verinin tipi.
  */
-template <typename T> struct Node {
-  T data;     ///< Dugumun icindeki veri
-  Node *next; ///< Bir sonraki dugumu isaret eden pointer
+template <typename T>
+struct Node {
+    T data;      ///< Dugumun icindeki veri
+    Node *next;  ///< Bir sonraki dugumu isaret eden pointer
 
-  /**
-   * @brief Node kurucu metodu (Constructor).
-   * @param val Dugume atanacak baslangic degeri.
-   */
-  Node(T val) : data(val), next(nullptr) {}
+    /**
+     * @brief Node kurucu metodu (Constructor).
+     * @param val Dugume atanacak baslangic degeri.
+     */
+    Node(T val) : data(val), next(nullptr) {}
 };
 
 /**
@@ -21,90 +27,102 @@ template <typename T> struct Node {
  * STL std::vector veya std::list yerine kullanilacaktir.
  * @tparam T Listede tutulacak verilerin tipi.
  */
-template <typename T> class LinkedList {
-private:
-  Node<T> *head; ///< Listenin ilk elemanini isaret eder
-  Node<T> *tail; ///< Listenin son elemanini isaret eder (Hizli ekleme icin)
-  int size;      ///< Listedeki toplam dugum sayisi
+template <typename T>
+class LinkedList {
+   private:
+    Node<T> *head;  ///< Listenin ilk elemanini isaret eder
+    Node<T> *tail;  ///< Listenin son elemanini isaret eder (Hizli ekleme icin)
+    int size;       ///< Listedeki toplam dugum sayisi
 
-public:
-  /**
-   * @brief Bos bir bagli liste olusturur.
-   */
-  LinkedList() : head(nullptr), tail(nullptr), size(0) {}
+   public:
+    /**
+     * @brief Bos bir bagli liste olusturur.
+     */
+    LinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
-  /**
-   * @brief Yikici metod (Destructor). Hafiza sizintisini (memory leak) onler.
-   * Nesne silindiginde icindeki tum dugumleri hafizadan temizler.
-   */
-  ~LinkedList() { clear(); }
-
-  /**
-   * @brief Listenin sonuna yeni bir eleman ekler. O(1) zaman karmasikligi.
-   * @param value Eklenecek veri.
-   */
-  void insert(T value) {
-    Node<T> *newNode = new Node<T>(value);
-    if (head == nullptr) {
-      head = newNode;
-      tail = newNode;
-    } else {
-      tail->next = newNode;
-      tail = newNode;
+    /**
+     * @brief Yikici metod (Destructor). Hafiza sizintisini (memory leak) onler.
+     * Nesne silindiginde icindeki tum dugumleri hafizadan temizler.
+     */
+    ~LinkedList() {
+        clear();
     }
-    size++;
-  }
-  
-  bool remove(const T& value) {
-    Node<T>* current = head;
-    Node<T>* prev = nullptr;
 
-    while (current != nullptr) {
-        if (current->data == value) {
-            if (prev == nullptr)       // baş düğüm siliniyorsa
-                head = current->next;
-            else
-                prev->next = current->next;
-
-            if (current == tail)       // kuyruk düğüm siliniyorsa
-                tail = prev;
-
-            delete current;
-            size--;
-            return true;
+    /**
+     * @brief Listenin sonuna yeni bir eleman ekler. O(1) zaman karmasikligi.
+     * @param value Eklenecek veri.
+     */
+    void insert(T value) {
+        Node<T> *newNode = new Node<T>(value);
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
         }
-        prev = current;
-        current = current->next;
+        size++;
     }
-    return false;
-}
 
-  /**
-   * @brief Listenin basindaki elemani dondurur (Iterasyon icin gereklidir).
-   * @return Node<T>* Ilk dugumun pointer'i.
-   */
-  Node<T> *getHead() const { return head; }
+    /**
+     * @brief Listeden belirtilen veriyi kaldirir.
+     * @param value Silinecek veri.
+     * @return bool Basariyla silinirse true, eleman bulunamazsa false.
+     */
+    bool remove(const T &value) {
+        Node<T> *current = head;
+        Node<T> *prev = nullptr;
 
-  /**
-   * @brief Listedeki eleman sayisini dondurur.
-   * @return int Liste boyutu.
-   */
-  int getSize() const { return size; }
+        while (current != nullptr) {
+            if (current->data == value) {
+                if (prev == nullptr)  // baş düğüm siliniyorsa
+                    head = current->next;
+                else
+                    prev->next = current->next;
 
-  /**
-   * @brief Listedeki tum elemanlari siler ve hafizayi (heap) serbest birakir.
-   */
-  void clear() {
-    Node<T> *current = head;
-    while (current != nullptr) {
-      Node<T> *nextNode = current->next;
-      delete current; // Hafizayi iade et (Valgrind hatasini engeller)
-      current = nextNode;
+                if (current == tail)  // kuyruk düğüm siliniyorsa
+                    tail = prev;
+
+                delete current;
+                size--;
+                return true;
+            }
+            prev = current;
+            current = current->next;
+        }
+        return false;
     }
-    head = nullptr;
-    tail = nullptr;
-    size = 0;
-  }
+
+    /**
+     * @brief Listenin basindaki elemani dondurur (Iterasyon icin gereklidir).
+     * @return Node<T>* Ilk dugumun pointer'i.
+     */
+    Node<T> *getHead() const {
+        return head;
+    }
+
+    /**
+     * @brief Listedeki eleman sayisini dondurur.
+     * @return int Liste boyutu.
+     */
+    int getSize() const {
+        return size;
+    }
+
+    /**
+     * @brief Listedeki tum elemanlari siler ve hafizayi (heap) serbest birakir.
+     */
+    void clear() {
+        Node<T> *current = head;
+        while (current != nullptr) {
+            Node<T> *nextNode = current->next;
+            delete current;
+            current = nextNode;
+        }
+        head = nullptr;
+        tail = nullptr;
+        size = 0;
+    }
 };
 
-#endif // LINKEDLIST_H
+#endif  // LINKEDLIST_H
