@@ -8,6 +8,9 @@
 
 int main(int argc, char *argv[]) {
   std::string inputFile = "data/input_sample.json";
+
+  DynamicArray<Course *> allCourses;
+
   if (argc > 1) {
     inputFile = argv[1];
   }
@@ -102,7 +105,7 @@ int main(int argc, char *argv[]) {
   std::cout << "--- PROJ-16: Sinav Cizelgeleme Sistemi ---\n\n";
 
   // Parser'i calistiriyoruz
-  Parser::parseJSON(inputFile);
+  Parser::parseJSON(inputFile, allCourses);
 
   return 0;
 }
