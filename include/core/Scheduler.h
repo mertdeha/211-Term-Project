@@ -200,6 +200,7 @@ class Scheduler {
 
                 if (studentsRemaining > 0) {
                     std::cout << " -> !!! [CAPACITY INSUFFICIENT]";
+                    assignedRoomStr = "Yetersiz Kapasite / Atanamadi";
                     assignedRoomStr += " (Yer Kalmadi!)";
                 }
                 std::cout << "\n";
