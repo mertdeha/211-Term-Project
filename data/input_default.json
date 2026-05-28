@@ -1,0 +1,54 @@
+{
+    "courses": [
+        {
+            "id": "CSE211",
+            "name": "Data Structures",
+            "enrolled": [
+                "Ali",
+                "Ayse",
+                "Mehmet",
+                "Fatma"
+            ]
+        },
+        {
+            "id": "CSE212",
+            "name": "Programming",
+            "enrolled": [
+                "Ali",
+                "Veli",
+                "Can"
+            ]
+        },
+        {
+            "id": "MATH101",
+            "name": "Calculus",
+            "enrolled": [
+                "Ayse",
+                "Veli",
+                "Zeynep"
+            ]
+        },
+        {
+            "id": "ENG101",
+            "name": "English",
+            "enrolled": [
+                "Hasan",
+                "Huseyin"
+            ]
+        }
+    ],
+    "rooms": [
+        {
+            "id": "Amfi-1",
+            "capacity": 5
+        },
+        {
+            "id": "D-101",
+            "capacity": 2
+        },
+        {
+            "id": "D-102",
+            "capacity": 3
+        }
+    ]
+}
