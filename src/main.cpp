@@ -8,10 +8,6 @@
  * @date Mayis 2026
  */
 
-#include "../include/core/Course.h"
-#include "../include/core/Parser.h"
-// ... (geri kalan main.cpp kodlarin ayni sekilde devam edecek)
-
 #include <iostream>
 #include <string>
 
@@ -30,52 +26,40 @@ int main(int argc, char *argv[]) {
     std::cout << "=========================================================================\n\n";
 
     DynamicArray<Course *> allCourses;
+    DynamicArray<Room> allRooms;
 
+    // Varsayilan test dosyasi
     std::string inputFile = "data/input_sample.json";
     if (argc > 1) {
-        inputFile = argv[1];
+        inputFile = argv[1];  // Terminalden girilen dosyayi al
     }
 
+    std::cout << "\n>>> ADIM 1: JSON Dosyasindan Veriler Okunuyor...\n";
     Parser::parseJSON(inputFile, allCourses);
-
-    if (allCourses.size() == 0) {
-        std::cout << "[INFO] '" << inputFile << "' bulunamadi veya bos. Test verileri otomatik uretiliyor...\n";
-        Course *c1 = new Course("CSE101", "Intro to CS");
-        c1->addStudent("Ahmet");
-        c1->addStudent("Mehmet");
-        c1->addStudent("Can");
-
-        Course *c2 = new Course("CSE102", "Data Structures");
-        c2->addStudent("Mehmet");
-        c2->addStudent("Elif");
-        c2->addStudent("Zeynep");
-
-        Course *c3 = new Course("MATH101", "Calculus I");
-        c3->addStudent("Ahmet");
-        c3->addStudent("Buse");
-        c3->addStudent("Kaan");
-
-        Course *c4 = new Course("PHYS101", "Physics I");
-        c4->addStudent("Elif");
-        c4->addStudent("Kaan");
-        c4->addStudent("Arda");
-
-        Course *c5 = new Course("CSE211", "Digital Design");
-        c5->addStudent("Seda");
-        c5->addStudent("Umut");
-        c5->addStudent("Omer");
-        c5->addStudent("Ali");
-        c5->addStudent("Veli");
-        c5->addStudent("Ayse");
-
-        allCourses.push_back(c1);
-        allCourses.push_back(c2);
-        allCourses.push_back(c3);
-        allCourses.push_back(c4);
-        allCourses.push_back(c5);
-    }
+    Parser::parseRooms(inputFile, allRooms);
 
     std::cout << "[INFO] Hafizadaki Toplam Ders Sayisi: " << allCourses.size() << "\n";
+    std::cout << "[INFO] Hafizadaki Toplam Oda Sayisi: " << allRooms.size() << "\n";
+
+    // Eger veri tamamen boşsa sistemi güvenle kapat.
+    if (allCourses.size() == 0) {
+        std::cout << "\n[UYARI] Okunan veri setinde hic ders bulunamadi! Program guvenle sonlandiriliyor.\n";
+
+        // Eski HTML dosyasinin ekranda yaniltici bilgi gostermemesi icin uzerine "Bos" uyarisi yaziyoruz:
+        std::ofstream htmlFile("frontend/exam_schedule.html");
+        if (htmlFile.is_open()) {
+            htmlFile << "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>No Data</title></head>";
+            htmlFile
+                << "<body style='font-family:sans-serif; text-align:center; padding:50px; background-color:#f8f9fa;'>";
+            htmlFile << "<h2 style='color:#e74c3c;'>Girdi dosyasinda hic ders bulunamadi (Veya dosya acilamadi).</h2>";
+            htmlFile << "<p style='color:#7f8c8d;'>Gosterilecek bir sinav programi yok.</p>";
+            htmlFile << "</body></html>";
+            htmlFile.close();
+            std::cout << "[FRONTEND] Eski HTML dosyasi temizlendi (Bos ekran uretildi).\n";
+        }
+
+        return 0;
+    }
 
     std::cout << "\n>>> ADIM 2: Cakisim Grafi Insa Ediliyor...\n";
     Graph conflictGraph;
@@ -95,19 +79,10 @@ int main(int argc, char *argv[]) {
     }
 
     std::cout << "\n>>> ADIM 4: Sinif Atama Modulu Baslatiliyor...\n";
-    DynamicArray<Room> allRooms;
-    allRooms.push_back(Room("D101", 2));
-    allRooms.push_back(Room("D102", 3));
-    allRooms.push_back(Room("Amfi-A", 5));
-
-    // FRONTEND İÇİN HARİTA OLUŞTURULDU
     HashMap<std::string, std::string> courseRooms;
-
-    // HARİTA SCHEDULER'A VERİLDİ
     Scheduler::assignRooms(allCourses, allRooms, courseToSlotMap, totalAvailableSlots, courseRooms);
 
     std::cout << "\n>>> ADIM 5: Web Arayuzu Uretiliyor...\n";
-    // FRONTEND ÇAĞRILDI
     Frontend::generateWebInterface(allCourses, courseToSlotMap, courseRooms, totalAvailableSlots);
 
     std::cout << "\n=========================================================================\n";

@@ -1,0 +1,76 @@
+{
+    "courses": [
+        {
+            "id": "CS1",
+            "name": "Algo",
+            "enrolled": [
+                "S1",
+                "S2",
+                "S3",
+                "S4",
+                "S5",
+                "S6"
+            ]
+        },
+        {
+            "id": "CS2",
+            "name": "OS",
+            "enrolled": [
+                "S2",
+                "S4",
+                "S6",
+                "S8",
+                "S10"
+            ]
+        },
+        {
+            "id": "CS3",
+            "name": "DB",
+            "enrolled": [
+                "S1",
+                "S3",
+                "S5",
+                "S7",
+                "S9"
+            ]
+        },
+        {
+            "id": "CS4",
+            "name": "AI",
+            "enrolled": [
+                "S1",
+                "S2",
+                "S9",
+                "S10"
+            ]
+        },
+        {
+            "id": "CS5",
+            "name": "Network",
+            "enrolled": [
+                "S11",
+                "S12",
+                "S13",
+                "S14"
+            ]
+        }
+    ],
+    "rooms": [
+        {
+            "id": "Oda-A",
+            "capacity": 2
+        },
+        {
+            "id": "Oda-B",
+            "capacity": 3
+        },
+        {
+            "id": "Oda-C",
+            "capacity": 2
+        },
+        {
+            "id": "Oda-D",
+            "capacity": 1
+        }
+    ]
+}
