@@ -1,6 +1,6 @@
 /**
  * @file test_data_structures.cpp
- * @brief Veri yapılarının (LinkedList, HashMap, DynamicArray, Graph) birim testleri.
+ * @brief Unit tests for custom data structures (LinkedList, HashMap, DynamicArray, Graph).
  */
 
 #include <cassert>
@@ -17,7 +17,7 @@
 #endif
 
 /**
- * @brief LinkedList veri yapısının temel fonksiyonlarını test eder.
+ * @brief Tests the fundamental functions of the LinkedList data structure.
  */
 void testLinkedList() {
     std::cout << "[UNIT TEST] Testing LinkedList..." << std::endl;
@@ -30,7 +30,7 @@ void testLinkedList() {
 }
 
 /**
- * @brief HashMap veri yapısının anahtar-değer eşlemesini test eder.
+ * @brief Tests key-value pair mapping of the HashMap data structure.
  */
 void testHashMap() {
     std::cout << "[UNIT TEST] Testing HashMap..." << std::endl;
@@ -43,7 +43,7 @@ void testHashMap() {
 }
 
 /**
- * @brief DynamicArray veri yapısının boyut ve eleman yönetimini test eder.
+ * @brief Tests size expansion and element management of the DynamicArray data structure.
  */
 void testDynamicArray() {
     std::cout << "[UNIT TEST] Testing DynamicArray..." << std::endl;
@@ -57,7 +57,7 @@ void testDynamicArray() {
 }
 
 /**
- * @brief Graph veri yapısının düğüm ve kenar (vertex/edge) mantığını test eder.
+ * @brief Tests node and edge (vertex/edge) relationship logic of the Graph data structure.
  */
 void testGraph() {
     std::cout << "[UNIT TEST] Testing Graph..." << std::endl;
@@ -71,8 +71,8 @@ void testGraph() {
 }
 
 /**
- * @brief Tüm birim testlerini sırasıyla çalıştıran ana fonksiyon.
- * @return int Başarı durumu (0).
+ * @brief Main function that sequentially runs all core data structure unit tests.
+ * @return int Success status indicator (0).
  */
 int main() {
     std::cout << "--- Starting Unit Tests: Data Structures ---\n" << std::endl;

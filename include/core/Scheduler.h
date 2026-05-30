@@ -12,19 +12,20 @@
 
 /**
  * @file Scheduler.h
- * @brief Sinav zamanlamasi (Graph Coloring) ve sinif atamasi (Bin Packing) modulunu iceren dosya.
+ * @brief Contains the exam scheduling (Graph Coloring) and room assignment (Bin Packing) module.
  */
 
 /**
- * @brief Cakisim grafini kuran, Welsh-Powell ile graf boyayan ve First-Fit Decreasing ile oda atayan sinif.
+ * @brief Class that builds the conflict graph, colors the graph using Welsh-Powell, and assigns rooms via First-Fit
+ * Decreasing.
  */
 class Scheduler {
    public:
     /**
-     * @brief Dersler arasindaki ortak ogrencileri tespit ederek cakisim grafini (Conflict Graph) olusturur.
-     * * @param allCourses Sistemdeki tum dersleri barindiran dinamik dizi.
-     * @param conflictGraph Uzerine cakisim kenarlarinin (edges) eklenecegi graf nesnesi.
-     * @post Ortak ogrencisi olan dersler arasinda graf uzerinde kenar (edge) olusturulur.
+     * @brief Detects shared students between courses to construct the Conflict Graph.
+     * @param allCourses Dynamic array containing all courses in the system.
+     * @param conflictGraph Graph object onto which conflict edges will be added.
+     * @post An edge is created on the graph between any courses that share at least one student.
      */
     static void buildConflictGraph(DynamicArray<Course *> &allCourses, Graph &conflictGraph) {
         for (int i = 0; i < allCourses.size(); i++) {
@@ -53,13 +54,13 @@ class Scheduler {
     }
 
     /**
-     * @brief Welsh-Powell (Largest-Degree-First) algoritmasi ile grafa zaman dilimi (renk) atar.
-     * * @param allCourses Sistemdeki tum dersleri barindiran dinamik dizi.
-     * @param conflictGraph Cakisimlari gosteren graf nesnesi.
-     * @param totalAvailableSlots Maksimum kullanilabilecek zaman dilimi sayisi.
-     * @param courseToSlotMap Atanan zaman dilimlerinin kaydedilecegi Hash Map.
-     * @return bool Atama basariliysa true, kapasite yetersizliginde (Infeasibility) false doner.
-     * @post courseToSlotMap icerisine her ders icin bir zaman dilimi degeri eklenmis olur.
+     * @brief Assigns a time slot (color) to the graph using the Welsh-Powell (Largest-Degree-First) algorithm.
+     * @param allCourses Dynamic array containing all courses in the system.
+     * @param conflictGraph Graph object representing the conflicts.
+     * @param totalAvailableSlots Maximum number of usable time slots.
+     * @param courseToSlotMap Hash Map where assigned time slots will be recorded.
+     * @return bool Returns true if assignment is successful, false in case of capacity insufficiency (Infeasibility).
+     * @post A time slot value is added for each course inside courseToSlotMap.
      */
     static bool colorGraph(DynamicArray<Course *> &allCourses, Graph &conflictGraph, int totalAvailableSlots,
                            HashMap<std::string, int> &courseToSlotMap) {
@@ -118,15 +119,15 @@ class Scheduler {
     }
 
     /**
-     * @brief First-Fit Decreasing (FFD) algoritmasi ile sinavlari odalara atar (Bin Packing).
-     * * @param allCourses Sistemdeki tum dersleri barindiran dinamik dizi.
-     * @param allRooms Okuldaki musait siniflari barindiran dinamik dizi.
-     * @param courseToSlotMap colorGraph ile hesaplanan zaman dilimi atamalari.
-     * @param totalSlots Toplam zaman dilimi sayisi.
-     * @param courseRooms Frontend icin uretilen ders-oda metinlerini tutacak Hash Map.
-     * @post courseRooms haritasina her ders icin oda atama metni (std::string) eklenir.
+     * @brief Assigns exams to rooms using the First-Fit Decreasing (FFD) algorithm (Bin Packing).
+     * @param allCourses Dynamic array containing all courses in the system.
+     * @param allRooms Dynamic array containing available classrooms in the school.
+     * @param courseToSlotMap Time slot assignments calculated by colorGraph.
+     * @param totalSlots Total number of time slots.
+     * @param courseRooms Hash Map that will hold the course-room string outputs generated for the frontend.
+     * @post A room assignment text (std::string) is added to the courseRooms map for each course.
      */
-    // BURASI GÜNCELLENDİ: Frontend'e veri taşımak için courseRooms eklendi
+    // UPDATED HERE: courseRooms added to transfer data to Frontend
     static void assignRooms(DynamicArray<Course *> &allCourses, DynamicArray<Room> &allRooms,
                             HashMap<std::string, int> &courseToSlotMap, int totalSlots,
                             HashMap<std::string, std::string> &courseRooms) {
@@ -174,7 +175,7 @@ class Scheduler {
                 Course *course = coursesInThisSlot.get(i);
                 int studentsRemaining = course->enrolledStudents.getSize();
 
-                std::string assignedRoomStr = "";  // HTML'E GİDECEK YAZI
+                std::string assignedRoomStr = "";  // TEXT TO BE SENT TO HTML
 
                 std::cout << "  -> Course: " << course->id << " (" << studentsRemaining
                           << " Students) -> Assigned Room(s): ";
@@ -185,12 +186,12 @@ class Scheduler {
                     if (room.capacity > 0) {
                         if (room.capacity >= studentsRemaining) {
                             std::cout << room.id << " [" << studentsRemaining << " seats reserved] ";
-                            assignedRoomStr += room.id;  // İSMİ KAYDET
+                            assignedRoomStr += room.id;  // SAVE ROOM NAME
                             room.capacity -= studentsRemaining;
                             studentsRemaining = 0;
                         } else {
                             std::cout << room.id << " [" << room.capacity << " seats merged] + ";
-                            assignedRoomStr += room.id + " + ";  // İSMİ KAYDET
+                            assignedRoomStr += room.id + " + ";  // SAVE ROOM NAME
                             studentsRemaining -= room.capacity;
                             room.capacity = 0;
                         }
@@ -200,12 +201,12 @@ class Scheduler {
 
                 if (studentsRemaining > 0) {
                     std::cout << " -> !!! [CAPACITY INSUFFICIENT]";
-                    assignedRoomStr = "Yetersiz Kapasite / Atanamadi";
-                    assignedRoomStr += " (Yer Kalmadi!)";
+                    assignedRoomStr = "Insufficient Capacity / Unassigned";
+                    assignedRoomStr += " (No space left!)";
                 }
                 std::cout << "\n";
 
-                // SONUCU HARİTAYA EKLE (Frontend buradan okuyacak)
+                // ADD RESULT TO MAP (Frontend will read from here)
                 courseRooms.insert(course->id, assignedRoomStr);
             }
         }

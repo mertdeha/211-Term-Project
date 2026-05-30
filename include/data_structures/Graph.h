@@ -9,49 +9,49 @@
 
 /**
  * @file Graph.h
- * @brief Cakisim grafini (Conflict Graph) olusturan yapi.
+ * @brief Structure that forms the Conflict Graph.
  */
 
 /**
- * @brief Graftaki bir dugumu (Vertex) temsil eder.
+ * @brief Represents a vertex (node) in the graph.
  */
 struct Vertex {
-    std::string id;                 ///< Dugumun kimligi (Orn: Ders Kodu)
-    LinkedList<std::string> edges;  ///< Bu dugumun bagli oldugu komsulari (kenarlar)
-    Vertex *next;                   ///< Bir sonraki dugumu isaret eden pointer
+    std::string id;                 ///< Vertex identifier (e.g., Course Code)
+    LinkedList<std::string> edges;  ///< The neighbors (edges) connected to this vertex
+    Vertex *next;                   ///< Pointer targeting the next vertex
 
     /**
-     * @brief Vertex nesnesi olusturur.
-     * @param vertexId Dugume verilecek ID.
+     * @brief Constructs a Vertex object.
+     * @param vertexId The ID to assign to the vertex.
      */
     Vertex(std::string vertexId) : id(vertexId), next(NULL) {}
 };
 
 /**
- * @brief Ders cakisimlarini modellemek icin kullanilan Yonlendirilmemis Graf (Undirected Graph) sinifi.
+ * @brief Undirected Graph class used to model exam conflicts.
  */
 class Graph {
    private:
-    Vertex *head;                              ///< Graftaki ilk dugum
-    int numVertices;                           ///< Toplam dugum sayisi
-    HashMap<std::string, Vertex *> vertexMap;  ///< Dugum arama hizini O(1) yapmak icin HashMap
+    Vertex *head;                              ///< First vertex in the graph
+    int numVertices;                           ///< Total number of vertices
+    HashMap<std::string, Vertex *> vertexMap;  ///< HashMap to ensure O(1) vertex lookup speed
 
    public:
     /**
-     * @brief Bos bir graf olusturur.
+     * @brief Constructs an empty graph.
      */
     Graph() : head(NULL), numVertices(0) {}
 
     /**
-     * @brief Grafi ve tum dugumleri hafizadan temizler.
+     * @brief Clears the graph and releases all vertices from memory.
      */
     ~Graph() {
         clear();
     }
 
     /**
-     * @brief Grafa yeni bir dugum (Ders) ekler.
-     * @param id Eklenecek dugumun ID'si.
+     * @brief Adds a new vertex (Course) to the graph.
+     * @param id The ID of the vertex to be added.
      */
     void addVertex(std::string id) {
         if (getVertex(id) != NULL) return;
@@ -71,9 +71,9 @@ class Graph {
     }
 
     /**
-     * @brief Iki dugum arasinda kenar (edge) olusturur.
-     * @param src Baslangic dugumu.
-     * @param dest Hedef dugumu.
+     * @brief Creates an edge between two vertices.
+     * @param src Source vertex.
+     * @param dest Destination vertex.
      */
     void addEdge(std::string src, std::string dest) {
         Vertex *v1 = getVertex(src);
@@ -86,9 +86,9 @@ class Graph {
     }
 
     /**
-     * @brief ID'si verilen dugumu HashMap uzerinden hizlica (O(1)) bulup dondurur.
-     * @param id Aranacak dugumun ID'si.
-     * @return Vertex* Dugumun bellek adresi (Bulunamazsa NULL).
+     * @brief Finds and returns the vertex with the given ID quickly (O(1)) via the HashMap.
+     * @param id The ID of the vertex to search for.
+     * @return Vertex* Memory address of the vertex (NULL if not found).
      */
     Vertex *getVertex(std::string id) const {
         Vertex **found = vertexMap.get(id);
@@ -99,32 +99,32 @@ class Graph {
     }
 
     /**
-     * @brief Graftaki ilk dugumu dondurur.
-     * @return Vertex* Grafin head pointer'i.
+     * @brief Returns the first vertex in the graph.
+     * @return Vertex* The head pointer of the graph.
      */
     Vertex *getHead() const {
         return head;
     }
 
     /**
-     * @brief Graftaki toplam dugum sayisini dondurur.
-     * @return int Dugum sayisi.
+     * @brief Returns the total number of vertices in the graph.
+     * @return int The vertex count.
      */
     int getNumVertices() const {
         return numVertices;
     }
 
     /**
-     * @brief Grafin yapisini (hangi dersin kimlerle cakistigini) terminale yazdirir.
+     * @brief Prints the structure of the graph (which course conflicts with which courses) to the terminal.
      */
     void printGraph() const {
         Vertex *current = head;
         while (current != NULL) {
-            std::cout << "[" << current->id << "] sunlarla cakisiyor: ";
+            std::cout << "[" << current->id << "] conflicts with: ";
 
             Node<std::string> *edgeCurrent = current->edges.getHead();
             if (edgeCurrent == NULL) {
-                std::cout << "Hicbiri";
+                std::cout << "None";
             }
             while (edgeCurrent != NULL) {
                 std::cout << edgeCurrent->data << " ";
@@ -137,7 +137,7 @@ class Graph {
     }
 
     /**
-     * @brief Graftaki tum verileri siler, hafizayi bosaltir.
+     * @brief Deletes all data in the graph, clearing allocated memory.
      */
     void clear() {
         Vertex *current = head;
@@ -151,9 +151,9 @@ class Graph {
     }
 
     /**
-     * @brief Belirtilen dugumun bagli oldugu komsularinin sayisini (Degree) doner.
-     * @param id Derecesi hesaplanacak dugumun ID'si.
-     * @return int Komsuluk derecesi.
+     * @brief Returns the degree (number of connected neighbors) of the specified vertex.
+     * @param id The ID of the vertex whose degree will be calculated.
+     * @return int The neighborhood degree.
      */
     int getDegree(std::string id) const {
         Vertex *v = getVertex(id);
@@ -164,9 +164,9 @@ class Graph {
     }
 
     /**
-     * @brief Bir dugumun komsularinin (edges) bagli listesini dondurur.
-     * @param id Komsu listesi alinacak dugum ID'si.
-     * @return const LinkedList<std::string>& Komsularin listesi.
+     * @brief Returns the linked list of neighbors (edges) for a given vertex.
+     * @param id The vertex ID whose neighbor list will be fetched.
+     * @return const LinkedList<std::string>& The list of neighbors.
      */
     const LinkedList<std::string> &getNeighbors(std::string id) const {
         Vertex *v = getVertex(id);

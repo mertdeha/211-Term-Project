@@ -11,24 +11,24 @@
 
 /**
  * @file Frontend.h
- * @brief Web tabanli kullanici arayuzunu uretmek icin kullanilan sinif.
+ * @brief Class used to generate the web-based user interface.
  */
 /**
- * @brief C++ arka planinda hesaplanan sinav programini HTML formatinda disa aktarir.
+ * @brief Exports the exam schedule computed in the C++ backend into HTML format.
  *
- * Bu sinif, STL veya harici bir GUI kutuphanesi kullanmadan, dogrudan C++ dosya
- * yazma islemleri (<fstream>) ile modern bir web arayuzu uretir.
+ * This class generates a modern web interface directly using C++ file writing
+ * operations (<fstream>) without utilizing the STL or any external GUI library.
  */
 class Frontend {
    public:
     /**
-     * @brief Sinav atamalarini HTML formatinda bir dosyaya yazar.
+     * @brief Writes the exam assignments to a file in HTML format.
      *
-     * @param allCourses Sistemdeki tum dersleri barindiran dinamik dizi.
-     * @param timeSlots Derslerin atandigi zaman dilimlerini tutan Hash Map.
-     * @param courseRooms Derslere atanan odalarin isimlerini tutan Hash Map.
-     * @param totalSlots Toplam kullanilabilir zaman dilimi sayisi.
-     * @post 'frontend/exam_schedule.html' adinda bir HTML dosyasi olusturulur.
+     * @param allCourses Dynamic array containing all courses in the system.
+     * @param timeSlots Hash map storing the time slots assigned to courses.
+     * @param courseRooms Hash map storing the room names assigned to courses.
+     * @param totalSlots Total number of available time slots.
+     * @post An HTML file named 'frontend/exam_schedule.html' is created.
      */
     static void generateWebInterface(DynamicArray<Course *> &allCourses, HashMap<std::string, int> &timeSlots,
                                      HashMap<std::string, std::string> &courseRooms, int totalSlots) {
@@ -53,8 +53,7 @@ class Frontend {
         htmlFile << "th { background-color: #3498db; color: white; font-weight: "
                     "bold; }\n";
 
-        // Time slot satırının normal hali ve yumuşak geçiş animasyonu (transition)
-        // eklendi
+        // Added normal state and smooth transition animation for the time slot row
         htmlFile << ".slot-row { background-color: #2c3e50; color: white; font-weight: "
                     "bold; text-align: center; letter-spacing: 1px; }\n";
 

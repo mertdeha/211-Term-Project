@@ -6,36 +6,36 @@
 #include <iostream>
 #include <string>
 
-#include "../data_structures/DynamicArray.h"  // Dinamik diziyi dahil ettik
+#include "../data_structures/DynamicArray.h"  // Included dynamic array
 #include "../data_structures/LinkedList.h"
 #include "Course.h"
 #include "Room.h"
 
 /**
  * @file Parser.h
- * @brief JSON formatindaki veri dosyalarini okuyup isleyen sinif.
+ * @brief Class used to read and process data files in JSON format.
  */
 
 /**
- * @brief Harici kutuphane kullanmadan JSON formatini manuel olarak parcalayan sinif.
+ * @brief Class that manually parses JSON format without using external libraries.
  */
 class Parser {
    public:
     /**
-     * @brief JSON dosyasini okur ve parcaladigi dersleri DynamicArray'e doldurur.
+     * @brief Reads a JSON file and populates the DynamicArray with parsed courses.
      *
-     * @param filename Okunacak JSON dosyasinin dosya yolu.
-     * @param allCourses Okunan derslerin eklenecegi dinamik dizi (referans).
-     * @post Dosyadan okunan her ders nesnesi 'new' ile hafizada olusturulup diziye eklenir.
+     * @param filename File path of the JSON file to be read.
+     * @param allCourses Reference to the dynamic array where read courses will be added.
+     * @post Each course object read from the file is dynamically allocated in memory with 'new' and added to the array.
      */
     static void parseJSON(const std::string &filename, DynamicArray<Course *> &allCourses) {
         std::ifstream file(filename.c_str());
         if (!file.is_open()) {
-            std::cerr << "[HATA] Dosya acilamadi: " << filename << std::endl;
+            std::cerr << "[ERROR] File could not be opened: " << filename << std::endl;
             return;
         }
 
-        std::cout << "[PARSER] Dosya okunuyor: " << filename << "...\n";
+        std::cout << "[PARSER] Reading file: " << filename << "...\n";
 
         std::string content = "";
         std::string tempLine;
@@ -69,15 +69,15 @@ class Parser {
             currentPos = endPos + 1;
         }
 
-        std::cout << "[PARSER] Toplam " << allCourses.size() << " ders basariyla hafizaya alindi.\n";
+        std::cout << "[PARSER] Total of " << allCourses.size() << " courses successfully loaded into memory.\n";
     }
 
     /**
-     * @brief JSON dosyasindaki sinif (oda) verilerini okur ve diziye ekler.
+     * @brief Reads classroom (room) data from a JSON file and adds them to the array.
      *
-     * @param filename Okunacak dosyanin yolu.
-     * @param allRooms Okunan odalarin eklenecegi dinamik dizi (referans).
-     * @post Dosyada bulunan "rooms" blogundaki veriler islenip diziye kaydedilir.
+     * @param filename File path of the file to be read.
+     * @param allRooms Reference to the dynamic array where read rooms will be added.
+     * @post Data inside the "rooms" block found in the file is processed and saved into the array.
      */
     static void parseRooms(const std::string &filename, DynamicArray<Room> &allRooms) {
         std::ifstream file(filename.c_str());
@@ -120,10 +120,10 @@ class Parser {
 
    private:
     /**
-     * @brief JSON blogu icerisinden belirtilen anahtarin (key) degerini ceker.
-     * @param line Aranacak metin blogu.
-     * @param key Cekilecek degerin anahtari (Orn: "id").
-     * @return std::string Anahtara karsilik gelen metin degeri.
+     * @brief Extracts the value of a specified key from a JSON block.
+     * @param line The text block to be searched.
+     * @param key The key of the value to be extracted (e.g., "id").
+     * @return std::string The string value corresponding to the key.
      */
     static std::string extractValue(const std::string &line, const std::string &key) {
         size_t keyPos = line.find(key);
@@ -138,10 +138,10 @@ class Parser {
     }
 
     /**
-     * @brief JSON icerisindeki liste (array) verilerini okur ve bagli listeye atar.
-     * @param line Aranacak metin blogu.
-     * @param key Liste verisinin anahtari (Orn: "enrolled").
-     * @return LinkedList<std::string> Okunan liste verilerini barindiran bagli liste.
+     * @brief Reads list (array) data inside JSON and assigns it to a linked list.
+     * @param line The text block to be searched.
+     * @param key The key of the list data (e.g., "enrolled").
+     * @return LinkedList<std::string> A linked list containing the read list data.
      */
     static LinkedList<std::string> extractArray(const std::string &line, const std::string &key) {
         LinkedList<std::string> list;

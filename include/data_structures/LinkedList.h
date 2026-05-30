@@ -3,54 +3,54 @@
 
 /**
  * @file LinkedList.h
- * @brief STL yerine yazilan kendi Bagli Liste veri yapimiz.
+ * @brief Custom Linked List data structure implemented instead of using the STL.
  */
 
 /**
- * @brief Bagli liste dugumunu (Node) temsil eden yapi.
- * @tparam T Dugumde tutulacak verinin tipi.
+ * @brief Structure representing a linked list node (Node).
+ * @tparam T The type of data to be stored inside the node.
  */
 template <typename T>
 struct Node {
-    T data;      ///< Dugumun icindeki veri
-    Node *next;  ///< Bir sonraki dugumu isaret eden pointer
+    T data;      ///< The data contained within the node
+    Node *next;  ///< Pointer targeting the next node
 
     /**
-     * @brief Node kurucu metodu (Constructor).
-     * @param val Dugume atanacak baslangic degeri.
+     * @brief Node constructor.
+     * @param val Initial value to be assigned to the node.
      */
     Node(T val) : data(val), next(nullptr) {}
 };
 
 /**
- * @brief Dinamik, tek yonlu bagli liste (Singly Linked List) sinifi.
- * STL std::vector veya std::list yerine kullanilacaktir.
- * @tparam T Listede tutulacak verilerin tipi.
+ * @brief Dynamic, singly linked list class.
+ * To be used as a replacement for STL std::vector or std::list.
+ * @tparam T The type of data to be stored in the list.
  */
 template <typename T>
 class LinkedList {
    private:
-    Node<T> *head;  ///< Listenin ilk elemanini isaret eder
-    Node<T> *tail;  ///< Listenin son elemanini isaret eder (Hizli ekleme icin)
-    int size;       ///< Listedeki toplam dugum sayisi
+    Node<T> *head;  ///< Points to the first element of the list
+    Node<T> *tail;  ///< Points to the last element of the list (for fast insertion)
+    int size;       ///< Total number of nodes inside the list
 
    public:
     /**
-     * @brief Bos bir bagli liste olusturur.
+     * @brief Constructs an empty linked list.
      */
     LinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
     /**
-     * @brief Yikici metod (Destructor). Hafiza sizintisini (memory leak) onler.
-     * Nesne silindiginde icindeki tum dugumleri hafizadan temizler.
+     * @brief Destructor. Prevents memory leaks by clearing all nodes from
+     * the heap when the object is destroyed.
      */
     ~LinkedList() {
         clear();
     }
 
     /**
-     * @brief Listenin sonuna yeni bir eleman ekler. O(1) zaman karmasikligi.
-     * @param value Eklenecek veri.
+     * @brief Appends a new element to the end of the list. O(1) time complexity.
+     * @param value The data to be added.
      */
     void insert(T value) {
         Node<T> *newNode = new Node<T>(value);
@@ -65,9 +65,9 @@ class LinkedList {
     }
 
     /**
-     * @brief Listeden belirtilen veriyi kaldirir.
-     * @param value Silinecek veri.
-     * @return bool Basariyla silinirse true, eleman bulunamazsa false.
+     * @brief Removes the specified data from the list.
+     * @param value The data value to be deleted.
+     * @return bool True if successfully deleted, false if the element was not found.
      */
     bool remove(const T &value) {
         Node<T> *current = head;
@@ -75,12 +75,12 @@ class LinkedList {
 
         while (current != nullptr) {
             if (current->data == value) {
-                if (prev == nullptr)  // baş düğüm siliniyorsa
+                if (prev == nullptr)  // If the head node is being deleted
                     head = current->next;
                 else
                     prev->next = current->next;
 
-                if (current == tail)  // kuyruk düğüm siliniyorsa
+                if (current == tail)  // If the tail node is being deleted
                     tail = prev;
 
                 delete current;
@@ -94,23 +94,23 @@ class LinkedList {
     }
 
     /**
-     * @brief Listenin basindaki elemani dondurur (Iterasyon icin gereklidir).
-     * @return Node<T>* Ilk dugumun pointer'i.
+     * @brief Returns the element at the front of the list (essential for iteration).
+     * @return Node<T>* Pointer to the first node.
      */
     Node<T> *getHead() const {
         return head;
     }
 
     /**
-     * @brief Listedeki eleman sayisini dondurur.
-     * @return int Liste boyutu.
+     * @brief Returns the number of elements currently in the list.
+     * @return int The list size.
      */
     int getSize() const {
         return size;
     }
 
     /**
-     * @brief Listedeki tum elemanlari siler ve hafizayi (heap) serbest birakir.
+     * @brief Deletes all elements in the list and deallocates the heap memory.
      */
     void clear() {
         Node<T> *current = head;
