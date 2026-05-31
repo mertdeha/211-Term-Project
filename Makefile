@@ -41,6 +41,11 @@ run: build
 	@echo "Running program..."
 	$(RUN_CMD) data/input_sample.json
 
+deps:
+	@echo Checking dependencies...
+	@echo No external libraries to download. All custom data structures are built-in.
+	@echo Dependencies installed successfully.
+
 test:
 	@echo "Compiling modular test suites..."
 	$(MKDIR_CMD)
