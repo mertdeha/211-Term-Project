@@ -47,14 +47,14 @@ test:
 	$(CXX) $(CXXFLAGS) tests/unit/test_data_structures.cpp -o $(TEST_UNIT)
 	$(CXX) $(CXXFLAGS) tests/integration/test_scheduler_pipeline.cpp -o $(TEST_INT)
 	$(CXX) $(CXXFLAGS) tests/edge_cases/test_room_saturation.cpp -o $(TEST_EDGE)
-	@echo "\n========================================="
+	@echo "========================================="
 	@echo "        EXECUTING TEST SUITES            "
-	@echo "=========================================\n"
+	@echo "========================================="
 	@echo ">>> 1. UNIT TESTS"
 	$(RUN_UNIT)
-	@echo "\n>>> 2. INTEGRATION TESTS"
+	@echo ">>> 2. INTEGRATION TESTS"
 	$(RUN_INT)
-	@echo "\n>>> 3. EDGE CASE TESTS"
+	@echo ">>> 3. EDGE CASE TESTS"
 	$(RUN_EDGE)
 
 memcheck: test

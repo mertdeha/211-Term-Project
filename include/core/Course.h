@@ -7,41 +7,41 @@
 
 /**
  * @file Course.h
- * @brief Sinav cizelgeleme sistemindeki bir dersi temsil eder.
+ * @brief Represents a course in the exam timetabling system.
  */
 
 /**
- * @brief Bir dersin kimlik bilgilerini ve o derse kayitli ogrencileri tutan sinif.
+ * @brief Class that stores a course's identification details and its enrolled students.
  *
- * Sinav cakisimlarini tespit edebilmek icin her dersin benzersiz bir ID'si, adi ve
- * o derse kayitli olan ogrencilerin bir bagli listesi (LinkedList) tutulur.
- * STL std::vector KULLANMAK YASAK oldugu icin kendi listemizi kullaniyoruz.
+ * To detect exam conflicts, each course holds a unique ID, a name, and a linked
+ * list (LinkedList) of students enrolled in that course.
+ * Using STL std::vector IS FORBIDDEN, so we are using our custom list implementation.
  */
 struct Course {
-    std::string id;    ///< Dersin kodu (Orn: "CSE101")
-    std::string name;  ///< Dersin adi (Orn: "Intro to CS")
+    std::string id;    ///< Course code (e.g., "CSE101")
+    std::string name;  ///< Course name (e.g., "Intro to CS")
 
     /**
-     * @brief Derse kayitli ogrencilerin ID'lerini tutan bagli liste.
+     * @brief Linked list holding the IDs of students enrolled in the course.
      */
     LinkedList<std::string> enrolledStudents;
 
     /**
-     * @brief Bos bir Course nesnesi olusturur.
+     * @brief Constructs an empty Course object.
      */
     Course() : id(""), name("") {}
 
     /**
-     * @brief Yeni bir Course (Ders) nesnesi olusturur.
-     * @param courseId Dersin kodu.
-     * @param courseName Dersin tam adi.
+     * @brief Constructs a new Course object with specific details.
+     * @param courseId The code of the course.
+     * @param courseName The full name of the course.
      */
     Course(std::string courseId, std::string courseName) : id(courseId), name(courseName) {}
 
     /**
-     * @brief Derse yeni bir ogrenci ekler.
-     * @param studentId Eklenecek ogrencinin adi veya ID'si.
-     * @post Ogrenci listesine yeni bir dugum (node) eklenmis olur.
+     * @brief Enrolls a new student into the course.
+     * @param studentId The name or ID of the student to be added.
+     * @post A new node is added to the enrolled students list.
      */
     void addStudent(std::string studentId) {
         enrolledStudents.insert(studentId);

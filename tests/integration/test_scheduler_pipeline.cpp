@@ -1,6 +1,6 @@
 /**
  * @file test_scheduler_pipeline.cpp
- * @brief Sınav çizelgeleme entegrasyon süreçlerini test eden ana modül.
+ * @brief Main module testing the exam scheduling integration pipeline.
  */
 
 #include <cassert>
@@ -17,8 +17,8 @@
 #endif
 
 /**
- * @brief Senaryo 1: Temel Çakışma ve Renklendirme Entegrasyonu
- * İki çakışan ve bir bağımsız ders ile pipeline'ı doğrular.
+ * @brief Scenario 1: Basic Conflict and Coloring Integration
+ * Validates the pipeline with two conflicting courses and one independent course.
  */
 void testBasicConflictPipeline() {
     std::cout << "[INTEGRATION TEST] Running: Basic Conflict Pipeline...\n";
@@ -28,7 +28,7 @@ void testBasicConflictPipeline() {
     c1->addStudent("StudentA");
     c1->addStudent("StudentB");
     Course *c2 = new Course("IE302", "Sim");
-    c2->addStudent("StudentB");  // Çakışma
+    c2->addStudent("StudentB");  // Conflict
     Course *c3 = new Course("MATH201", "LA");
     c3->addStudent("StudentC");
 
@@ -50,8 +50,8 @@ void testBasicConflictPipeline() {
 }
 
 /**
- * @brief Senaryo 2: "Çizelgelenemez" Durum Testi
- * Çok az zaman dilimi (slot) verilirse sistemin başarısız olduğunu (false) doğrular.
+ * @brief Scenario 2: "Unschedulable" State Test
+ * Verifies that the system correctly fails (returns false) if too few time slots are provided.
  */
 void testImpossibleScheduling() {
     std::cout << "[INTEGRATION TEST] Running: Impossible Scheduling Scenario...\n";
@@ -60,14 +60,14 @@ void testImpossibleScheduling() {
     courses.push_back(new Course("C1", "D1"));
     courses.push_back(new Course("C2", "D2"));
 
-    // Dersleri birbirine bağla (Çakışma var)
+    // Connect the courses to each other (Conflict exists)
     Graph conflictGraph;
     conflictGraph.addVertex("C1");
     conflictGraph.addVertex("C2");
     conflictGraph.addEdge("C1", "C2");
 
     HashMap<std::string, int> courseToSlotMap;
-    // 2 ders var ama sadece 1 slot veriyoruz -> Boyanamaz
+    // 2 courses exist but only 1 slot is provided -> Uncolorable
     bool success = Scheduler::colorGraph(courses, conflictGraph, 1, courseToSlotMap);
 
     assert(success == false);
@@ -77,7 +77,7 @@ void testImpossibleScheduling() {
 }
 
 /**
- * @brief Entegrasyon test paketini yöneten ana giriş noktası.
+ * @brief Main entry point managing the integration test suite.
  */
 int main() {
     testBasicConflictPipeline();
