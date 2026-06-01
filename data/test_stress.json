@@ -1,76 +1,320 @@
 {
     "courses": [
         {
-            "id": "CS1",
-            "name": "Algo",
+            "id": "CSE101",
+            "name": "Intro to Computer Science",
             "enrolled": [
                 "S1",
                 "S2",
                 "S3",
                 "S4",
                 "S5",
-                "S6"
+                "S6",
+                "S7",
+                "S8",
+                "S9",
+                "S10",
+                "S11",
+                "S12",
+                "S13",
+                "S14",
+                "S15",
+                "S16",
+                "S17",
+                "S18",
+                "S19",
+                "S20",
+                "S21",
+                "S22",
+                "S23",
+                "S24",
+                "S25"
             ]
         },
         {
-            "id": "CS2",
-            "name": "OS",
+            "id": "CSE211",
+            "name": "Data Structures",
+            "enrolled": [
+                "S5",
+                "S6",
+                "S7",
+                "S8",
+                "S9",
+                "S10",
+                "S26",
+                "S27",
+                "S28",
+                "S29",
+                "S30"
+            ]
+        },
+        {
+            "id": "MATH101",
+            "name": "Calculus I",
+            "enrolled": [
+                "S1",
+                "S2",
+                "S3",
+                "S15",
+                "S16",
+                "S17",
+                "S31",
+                "S32",
+                "S33",
+                "S34",
+                "S35"
+            ]
+        },
+        {
+            "id": "MATH102",
+            "name": "Calculus II",
+            "enrolled": [
+                "S4",
+                "S11",
+                "S12",
+                "S21",
+                "S22",
+                "S36",
+                "S37",
+                "S38",
+                "S39",
+                "S40"
+            ]
+        },
+        {
+            "id": "PHYS101",
+            "name": "Physics I",
+            "enrolled": [
+                "S13",
+                "S14",
+                "S15",
+                "S25",
+                "S26",
+                "S27",
+                "S41",
+                "S42",
+                "S43",
+                "S44"
+            ]
+        },
+        {
+            "id": "PHYS102",
+            "name": "Physics II",
+            "enrolled": [
+                "S18",
+                "S19",
+                "S20",
+                "S29",
+                "S30",
+                "S45",
+                "S46",
+                "S47",
+                "S48"
+            ]
+        },
+        {
+            "id": "ENG101",
+            "name": "Academic English",
+            "enrolled": [
+                "S1",
+                "S10",
+                "S20",
+                "S30",
+                "S40",
+                "S50",
+                "S60"
+            ]
+        },
+        {
+            "id": "BIO101",
+            "name": "General Biology",
             "enrolled": [
                 "S2",
                 "S4",
                 "S6",
                 "S8",
-                "S10"
+                "S10",
+                "S12",
+                "S49",
+                "S51",
+                "S53"
             ]
         },
         {
-            "id": "CS3",
-            "name": "DB",
+            "id": "CHEM101",
+            "name": "Chemistry",
             "enrolled": [
-                "S1",
-                "S3",
-                "S5",
-                "S7",
-                "S9"
+                "S21",
+                "S23",
+                "S25",
+                "S27",
+                "S29",
+                "S52",
+                "S54"
             ]
         },
         {
-            "id": "CS4",
-            "name": "AI",
-            "enrolled": [
-                "S1",
-                "S2",
-                "S9",
-                "S10"
-            ]
-        },
-        {
-            "id": "CS5",
-            "name": "Network",
+            "id": "HIST101",
+            "name": "History of Republic",
             "enrolled": [
                 "S11",
+                "S22",
+                "S33",
+                "S44",
+                "S55",
+                "S66"
+            ]
+        },
+        {
+            "id": "TURK101",
+            "name": "Turkish Language",
+            "enrolled": [
+                "S3",
+                "S6",
+                "S9",
                 "S12",
-                "S13",
-                "S14"
+                "S15",
+                "S18",
+                "S61",
+                "S62"
+            ]
+        },
+        {
+            "id": "ECON101",
+            "name": "Macroeconomics",
+            "enrolled": [
+                "S7",
+                "S14",
+                "S21",
+                "S28",
+                "S35",
+                "S63",
+                "S64",
+                "S65"
+            ]
+        },
+        {
+            "id": "LAW101",
+            "name": "Business Law",
+            "enrolled": [
+                "S16",
+                "S32",
+                "S48",
+                "S67",
+                "S68"
+            ]
+        },
+        {
+            "id": "PHIL101",
+            "name": "Philosophy",
+            "enrolled": [
+                "S8",
+                "S16",
+                "S24",
+                "S32",
+                "S40",
+                "S69",
+                "S70"
+            ]
+        },
+        {
+            "id": "ART101",
+            "name": "Art History",
+            "enrolled": [
+                "S9",
+                "S18",
+                "S27",
+                "S36",
+                "S45",
+                "S71",
+                "S72"
+            ]
+        },
+        {
+            "id": "PSY101",
+            "name": "Introduction to Psychology",
+            "enrolled": [
+                "S10",
+                "S20",
+                "S30",
+                "S73",
+                "S74",
+                "S75"
+            ]
+        },
+        {
+            "id": "SOC101",
+            "name": "Sociology",
+            "enrolled": [
+                "S5",
+                "S15",
+                "S25",
+                "S76",
+                "S77",
+                "S78"
+            ]
+        },
+        {
+            "id": "MGT101",
+            "name": "Management",
+            "enrolled": [
+                "S2",
+                "S12",
+                "S22",
+                "S79",
+                "S80"
+            ]
+        },
+        {
+            "id": "STAT101",
+            "name": "Statistics",
+            "enrolled": [
+                "S4",
+                "S14",
+                "S24",
+                "S81",
+                "S82",
+                "S83"
+            ]
+        },
+        {
+            "id": "EE101",
+            "name": "Digital Logic Design",
+            "enrolled": [
+                "S1",
+                "S11",
+                "S21",
+                "S31",
+                "S41",
+                "S84",
+                "S85"
             ]
         }
     ],
     "rooms": [
         {
-            "id": "Oda-A",
-            "capacity": 2
+            "id": "Amfi-A",
+            "capacity": 15
         },
         {
-            "id": "Oda-B",
-            "capacity": 3
+            "id": "Amfi-B",
+            "capacity": 10
         },
         {
-            "id": "Oda-C",
-            "capacity": 2
+            "id": "Lab-1",
+            "capacity": 8
         },
         {
-            "id": "Oda-D",
-            "capacity": 1
+            "id": "Lab-2",
+            "capacity": 8
+        },
+        {
+            "id": "Room-101",
+            "capacity": 5
+        },
+        {
+            "id": "Room-102",
+            "capacity": 5
         }
     ]
 }

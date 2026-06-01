@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 
     std::cout << "\n>>> STEP 3: Starting Graph Coloring...\n";
     HashMap<std::string, int> courseToSlotMap;
-    int totalAvailableSlots = 5;
+    int totalAvailableSlots = allCourses.size();
 
     bool schedulingPossible = Scheduler::colorGraph(allCourses, conflictGraph, totalAvailableSlots, courseToSlotMap);
 
