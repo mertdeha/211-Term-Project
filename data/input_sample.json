@@ -35,5 +35,15 @@
                 "S6"
             ]
         }
+    ],
+    "rooms": [
+        {
+            "id": "Amfi-A",
+            "capacity": 50
+        },
+        {
+            "id": "Lab-1",
+            "capacity": 20
+        }
     ]
 }
